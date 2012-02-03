@@ -1,0 +1,30 @@
+<domain type='kvm'>
+  <name>NAME</name>
+  <memory>524288</memory>
+  <vcpu>1</vcpu>
+  <os>
+    <type arch="x86_64">hvm</type>
+    <boot dev='cdrom'/>
+  </os>
+  <clock sync="localtime"/>
+  <devices>
+    <emulator>/usr/bin/kvm</emulator>
+    <disk type='file' device='disk'>
+      <source file='PATH_TO_DISK_IMAGE/disk.img'/>
+      <target dev='hda'/>
+      <driver name='qemu' type='qcow2'/>
+    </disk>
+    <interface type='bridge'>
+      <source bridge='nbr0'/>
+    </interface>
+    <graphics type='vnc' port='5901'/>
+    <disk type='file' device='cdrom'>
+      <source file='PATH_TO_THE_ISO_IMAGE'/>
+      <target dev='hdc'/>
+      <readonly/>
+    </disk>
+  </devices>
+  <features>
+    <acpi/>
+  </features>
+</domain>

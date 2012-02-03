@@ -1,0 +1,23 @@
+<network>
+  <name>nat_bridge</name>
+  <bridge name="nbr0" />
+  <forward mode="nat"/>
+  <domain name="devops.test"/>
+  <ip address="10.1.1.1" netmask="255.255.255.0">
+    <dhcp>
+      <range start="10.1.1.20" end="10.1.1.254" />
+      <host mac="02:FF:0A:0A:06:02" ip="10.1.1.2" name="lxdns01.devops.test"/>
+      <host mac="02:FF:0A:0A:06:03" ip="10.1.1.3" name="lxcm01.devops.test"/>
+      <host mac="02:FF:0A:0A:06:04" ip="10.1.1.4" name="lxrm01.devops.test"/>
+      <host mac="02:FF:0A:0A:06:05" ip="10.1.1.5" name="lxb001.devops.test"/>
+      <host mac="02:FF:0A:0A:06:06" ip="10.1.1.6" name="lxb002.devops.test"/>
+      <host mac="02:FF:0A:0A:06:07" ip="10.1.1.7" name="lxb003.devops.test"/>
+      <host mac="02:FF:0A:0A:06:08" ip="10.1.1.8" name="lxb004.devops.test"/>
+      <host mac="02:FF:0A:0A:06:09" ip="10.1.1.9" name="lxmon01.devops.test"/>
+      <host mac="02:FF:0A:0A:06:0A" ip="10.1.1.10" name="lxfs01.devops.test"/>
+      <host mac="02:FF:0A:0A:06:0B" ip="10.1.1.11" name="lxdev01.devops.test"/>
+      <host mac="02:FF:0A:0A:06:0C" ip="10.1.1.12" name="lxdev02.devops.test"/>
+      <host mac="02:FF:0A:0A:06:0D" ip="10.1.1.13" name="lxdev03.devops.test"/>
+    </dhcp>
+  </ip>
+</network>

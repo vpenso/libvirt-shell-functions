@@ -1,0 +1,6 @@
+Host instance
+  User devops
+  HostName 10.1.1.13
+  IdentityFile PATH_TO_VM_IMAGE/keys/id_rsa
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no

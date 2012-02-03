@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<domain type="kvm">
+  <name>NAME</name>
+  <memory>524288</memory>
+  <vcpu>1</vcpu>
+  <os>
+    <type arch="x86_64">hvm</type>
+  </os>
+  <clock sync="localtime"/>
+  <devices>
+    <emulator>/usr/bin/kvm</emulator>
+    <disk type="file" device="disk">
+      <source file="PATH_TO_DISK_IMAGE/disk.img"/>
+      <target dev="hda"/>
+      <driver name="qemu" type="qcow2"/>
+    </disk>
+    <interface type="bridge">
+      <source bridge="nbr0"/>
+      <mac address="02:FF:0A:0A:06:0D"/>
+    </interface>
+  </devices>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <features>
+    <acpi/>
+  </features>
+</domain>
