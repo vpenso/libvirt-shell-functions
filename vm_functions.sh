@@ -771,8 +771,7 @@ function vknife() { knife $@ -c $PWD/chef/knife.rb; }
 ## Interface all commands  
 ##
 
-HELP=$(<<EOF
-Usage: vm <command> [<sub-command>] [<args>]
+HELP="Usage: vm <command> [<sub-command>] [<args>]
 Shell-function to manage clusters of local virtual
 machines. (Version $_version)
 
@@ -798,7 +797,7 @@ Commands:
   forward <instance>:<port> <port>
     Enable port-forwarding. 
 
-Commands used in der instance working directory:
+Commands used in the instance working directory:
   start     
     Switch the instance on. 
   stop      
@@ -841,8 +840,7 @@ Overwrite environment variables:
      Path to your Chef cookbooks.
 
 Further information in the README. 
-EOF
-)
+"
 
 
 function vm() {
@@ -862,7 +860,7 @@ function vm() {
   clone) shift; __vm_clone $@ ;;
   shadow) shift; _clone_shadow=true __vm_clone $@ ;;
   forward) shift; vmportforward $@ ;;
-  help) echo $HELP ;;
+  help) echo "$HELP" ;;
   *)
     # the following commands can only be executed inside
     # a virtual machine container directory
