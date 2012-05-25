@@ -547,7 +547,7 @@ hostname to be applied."
   # Otherwise clone the instance
   else
     # make sure to outside a virtual machine container
-    cd $HOME 
+    cd /tmp
     # virtual machine image to use for cloning
     local _template=$KVM_GOLDEN_IMAGES/$1
     # make sure to have the FQDN of the instance
