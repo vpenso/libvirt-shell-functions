@@ -1,7 +1,7 @@
 Description
 ===========
 
-Shell functions (ZSH/Bash) to manage local virtual machines.
+Shell functions (Zsh/Bash) to manage local virtual machines.
 
 The following use-cases are supported:
 
@@ -15,6 +15,8 @@ The following use-cases are supported:
 * Provisioning of virtual machines with configuration management tools like Chef.
 
 We aim for very simple and lightweight code, and very transparent handling of external dependencies like KVM, LibVirt, Qemu, SSH, Rsync, SSHfs and Chef. 
+
+Find the installation instructions in [_docs/installation.md](_docs/installation.md)
 
 Usage
 =====
