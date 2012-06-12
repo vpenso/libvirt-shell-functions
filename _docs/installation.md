@@ -22,22 +22,20 @@ Make sure virtualization support is enabled in your firmware
 
     $ egrep --color '(vmx|svm)' /proc/cpuinfo
 
-Using a computer with *lots of memory is beneficial*. We also 
-recommend to *use a 64Bit operating system* since it can 
+Using a computer with enough memory is beneficial.It is  
+recommend to use a 64Bit operating system since it can 
 virtualize 32 and 64Bit virtual machines. For Debian/Ubuntu 
 flavored system install the following packages:
 
-*kvm qemu libvirt-bin dnsmasq git-core chef xmlstarlet rsync sshfs*
+    $ apt-get install kvm qemu libvirt-bin dnsmasq git-core chef xmlstarlet rsync sshfs
 
 In case you are using a different Linux flavor, the package list 
 above will help you to find the corresponding packages in another 
 distribution.
 
-*On Debian Squeeze:*
-
-Installing the 'dnsmasq' package in Debian will start automatically 
-an instance of the daemon. Before you continue make sure to shut 
-it down and disable it from the boot process.
+***On Debian Squeeze:** Installing the _dnsmasq_ package in will 
+start automatically an instance of the daemon. Before you continue 
+make sure to shut it down and disable it from the boot process.
 
      $ sudo service dnsmasq stop
      $ sudo update-rc.d dnsmasq disable
@@ -53,14 +51,14 @@ virtual machines:
 your shell environment to make sure to communicate only to the 
 system-wide instance of 'libvirtd'.
 
-    LIBVIRT_DEFAULT_URI=qemu:///system 
-    VIRSH_DEFAULT_CONNECT_URI=qemu:///system
+    $ export LIBVIRT_DEFAULT_URI=qemu:///system 
+    $ export VIRSH_DEFAULT_CONNECT_URI=qemu:///system
 
 ## Networking
 
 All virtual machine instances run inside a host-internal network 
 shared by all virtual machines, connected to the external world using 
-a NAT. Enable the network bridge with *vm network start*:
+a NAT. Enable the network bridge with:
 
 
     $ vm network start

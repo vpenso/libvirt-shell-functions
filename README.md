@@ -16,7 +16,7 @@ The following use-cases are supported:
 
 We aim for very simple and lightweight code, and very transparent handling of external dependencies like KVM, LibVirt, Qemu, SSH, Rsync, SSHfs and Chef. 
 
-Find the installation instructions in [_docs/installation.md](_docs/installation.md)
+Find the installation instructions in `_docs/installation.md`
 
 Usage
 =====
