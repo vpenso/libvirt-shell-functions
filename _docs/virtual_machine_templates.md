@@ -1,36 +1,40 @@
 # Virtual Machine Templates
 
-One of the advantages of using virtual machines is the convenience of cloning them as many times as needed. It is recommended to maintain a set of basic virtual machine images also call templates or golden images. Whenever you want to provision a new deployment you start from one such virtual machine template.
+One of the advantages of using virtual machines is the convenience of cloning them as many times as needed. It is recommended to maintain a set of basic virtual machine images call virtual machine templates in the following text. Whenever you want to provision a new virtual machine instance you inherit from a template.
 
 ## Create a New Template
 
-To install a new virtual machine you will need an ISO CD/DVD image containing the Linux distribution of your choice. Virtual machine templates get stored to a directory defined using the environment variable **$KVM_GOLDEN_IMAGES**, which is by default `/srv/vms/images/`.
+Create a new virtual machine template using a ISO CD/DVD image containing the Linux distribution of your choice. Virtual machine templates are stored to the directory `/srv/vms/images/` by default (you can adjust this using the environment variable **$KVM_GOLDEN_IMAGES**). These templates should have meaningful names like:
 
-These images should be never instantiated once they are installed. The folders holding particular virtual machine templates are named according to the distribution name, version, and bitness. Examples are:
+* debian64-6.0.0-basic
+* ubuntu64-10.04-desktop 
+* debian64-6.0.4-chef-client-0.10.4 
 
-   * debian64-6.0.0-basic
-   * ubuntu64-10.04-desktop 
-   * debian64-6.0.2.1-chef-client-0.10.4 
+Start a virtual machine for the installation using an adjusted version of the _libvirt_ configuration file `_config/libvirt_install.xml`. 
 
-Edit the template file `_configl/ibvirt_install.xml` accordingly, in order to begin the installation of the new Golden Image. You should adjust the tag source file from both, the disk and CDROM devices, so they would point to the right paths.
+    $ mkdir -p /srv/vms/images/debian64-6.0.5-basic
+    $ cd /srv/vms/images/debian64-6.0.5-basic
+    $ cp /srv/vms/_config/libvirt_install.xml .
 
-Before you can install the operating system you need to prepare a virtual machine disk image, which is in the case of Linux KVM created and initialized with the `kvm-img` command. (The parameter "40G" indicates the maximum size in GB the image can grow to, while being used.)
+Make sure to change the _domain/name_ the _devices/disk/source_ for the disk and the CDROM. Before you can install the operating system you need to prepare the disk image, which is in the case of Linux KVM created and initialized with the `kvm-img` command. (The parameter "40G" indicates the maximum size in GB the image can grow to, while being used.)
 
     $ kvm-img create -f qcow2 disk.img 40G
     $ virsh create libvirt_install.xml
 
-Once the instance has started you need to connect a VNC client to the port 5905. While you follow the installation menu we propose to always create a minimal system configuration, which is the same across all golden images your create.
+Once the instance has started you need to connect a VNC client to the port 5901. While you follow the installation menu we propose to always create a minimal system configuration, which is the same across all golden images your create.
 
-We set the following configuration options during installation:
+Set the following configuration options during installation:
 
-   * Keymap: English
-   * Host name is the distribution nick-name (e.g squeeze or lucid)
-   * Domain name 'devops.test'
-   * On big disk partition, no SWAP!
-   * Username is 'devops'
-   * Only standard system, no desktop environment (unless really needed), no services, no development environment,  no editor, nothing except a bootable Linux.
+* Keymap: English
+* Host name is the distribution nick-name (e.g squeeze or lucid)
+* Domain name 'devops.test'
+* Single disk partition, no SWAP!
+* Username is 'devops'
+* Only standard system, no desktop environment (unless really needed), no services, no development environment,  no editor, nothing except a bootable Linux.
 
-After the installation is finished, we elevate the devops user to be able to run commands as root via Sudo:
+Once the installation is finished copy the `_config/libvirt_instance.xml` and adjust it like the installation configuration before.
+
+Elevate the devops user to be able to run commands as root via Sudo:
 
     $ apt-get update
     $ apt-get install openssh-server sudo rsync
