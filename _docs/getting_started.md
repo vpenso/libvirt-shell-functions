@@ -67,4 +67,4 @@ Find more [detailed instruction][3] in the manual about virtual machine instance
 
 [1]: installation.md
 [2]: virtual_machine_templates.md
-[3]: virtual_machine_instance.md
+[3]: virtual_machine_instances.md
