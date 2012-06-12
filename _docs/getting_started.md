@@ -50,11 +50,7 @@ When a virtual machine template is available on your computer you can clone it a
     $ vm login
     [... SNIP ...]
 
-You can open a console session to the started virtual machine instance with **login** command.
-
-## Virtual Machine Life-Cycle
-
-A listing of the status of all virtual machine instances known to the system can be displayed with **status** command:
+You can open a console session to the started virtual machine instance with **login** command. A listing of the status of all virtual machine instances known to the system can be displayed with **status** command:
 
     $ vm status
     lxdev01.devops.test running
@@ -67,5 +63,8 @@ Use the commands **start** and **stop** to boot and shutdown a specific instance
 
 Start and stop only power on and off a specific instance. The clone command deploys a virtual machine persistently. This means that stopped virtual machine instances are still registered in the system. In order to remove them permanently it necessary to use the command **remove**. 
 
+Find more [detailed instruction][3] in the manual about virtual machine instances. 
+
 [1]: installation.md
 [2]: virtual_machine_templates.md
+[3]: virtual_machine_instance.md
