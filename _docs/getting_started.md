@@ -1,3 +1,5 @@
+Make sure you have read the [Installation Instructions][1] carefully before you continue reading this document.  
+
 # Getting Started
 
 The basic idea is to maintain a dedicated directory for each virtual machine and its configuration files (like the login credentials). Below you can see an example listing of such a virtual machine directory:
@@ -13,10 +15,7 @@ The basic idea is to maintain a dedicated directory for each virtual machine and
     roles/
     ssh_config
 
-The **$KVM_VM_INSTANCES** environment variable defines the directory used to store all virtual machines directories (by default `/srv/vms/instances`). The directory name equals the host name (FQDN) of the virtual machine it contains. In the example above the directory is called `lxdev01.devops.test`.
-
-The host-internal network shared by all virtual machines is the sub-domain **devops.test**. (You should have prepared this network following the description in the [installation manual][1], later we will show you how to configure your host internal DNS/DHCP configuration individually.)
-
+The **$KVM_VM_INSTANCES** environment variable defines the directory used to store all virtual machines directories (by default `/srv/vms/instances`). The directory name equals the host name (FQDN) of the virtual machine it contains. In the example above the directory is called `lxdev01.devops.test`. Note that in the default configuration virtual machines have the domain name **devops.test**.
 
 ## Download a Virtual Machine Template
 
