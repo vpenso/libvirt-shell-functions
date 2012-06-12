@@ -33,7 +33,7 @@ In case you are using a different Linux flavor, the package list
 above will help you to find the corresponding packages in another 
 distribution.
 
-***On Debian Squeeze:** Installing the _dnsmasq_ package in will 
+**On Debian Squeeze:** Installing the _dnsmasq_ package in will 
 start automatically an instance of the daemon. Before you continue 
 make sure to shut it down and disable it from the boot process.
 
@@ -49,7 +49,7 @@ virtual machines:
 
 *Re-login* to activate these group rights. Add the following to 
 your shell environment to make sure to communicate only to the 
-system-wide instance of 'libvirtd'.
+system-wide instance of _libvirtd_.
 
     $ export LIBVIRT_DEFAULT_URI=qemu:///system 
     $ export VIRSH_DEFAULT_CONNECT_URI=qemu:///system
