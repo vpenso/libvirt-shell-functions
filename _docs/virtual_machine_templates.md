@@ -56,13 +56,14 @@ Append the following line to `/etc/sudoers`:
 
 Remove the VNC related _device/graphics_ attribute from the `libvirt_instance.xml` configuration file, since login is provided by SSH now. When installation and final configuration is finished, shut down the instance and do not touch it anymore, but clone new virtual machines from there.
 
-As a last step we add a libvirt configuration used to start a virtual machine instance of this template. Adjust `_config/libvirt_instance.xml` accordingly.
+The virtual machine template directory should contain the following files at the end:
 
-The Golden Image directory should contain the following files at the end:
+* The file containing the template image `disk.img`.
+* The configuration `libvirt_instance.xml` used to start a virtual machine.
+* The SSH configuration `ssh_config` for password-less login.
+* The directory `keys/` holding the private/public key-pair used with SSH.
 
-   * The file containing the golden image **disk.img**.
-   * The configuration `libvirt_install.xml` used to install the operating system, for later reference.
-   * The configuration `libvirt_instance.xml` used to start a virtual machine. This file needs to be adjusted after the golden image was cloned.
+You may want to install the configuration management system Chef, to be included in the virtual machine template.
 
 ### Password-less Access
 
