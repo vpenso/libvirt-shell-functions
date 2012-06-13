@@ -18,6 +18,7 @@
       <source bridge="nbr0"/>
       <mac address="02:FF:0A:0A:06:0D"/>
     </interface>
+    <graphics type='vnc' port='5901'/>
   </devices>
   <on_poweroff>destroy</on_poweroff>
   <on_reboot>restart</on_reboot>

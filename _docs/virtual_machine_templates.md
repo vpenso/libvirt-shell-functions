@@ -10,6 +10,8 @@ Create a new virtual machine template using a ISO CD/DVD image containing the Li
 * ubuntu64-10.04-desktop 
 * debian64-6.0.4-chef-client-0.10.4 
 
+### Basic installation
+
 Start a virtual machine for the installation using an adjusted version of the _libvirt_ configuration file `_config/libvirt_install.xml`. 
 
     $ mkdir -p /srv/vms/images/debian64-6.0.5-basic
@@ -32,26 +34,27 @@ Set the following configuration options during installation:
 * Username is 'devops'
 * Only standard system, no desktop environment (unless really needed), no services, no development environment,  no editor, nothing except a bootable Linux.
 
-Once the installation is finished copy the `_config/libvirt_instance.xml` and adjust it like the installation configuration before.
+Once the installation is finished copy the _libvirt_ configuration file `_config/libvirt_instance.xml` and adjust _domain/name_ and _device/disk/source_, before starting the install virtual machine:
 
-Elevate the devops user to be able to run commands as root via Sudo:
+    $ cp /srv/vms/_config/libvirt_instance.xml .
+    $ virsh create libvirt_instance.xml
+
+Again you need to login using VNC port 5901. Install SSH, Sudo and Rsync:
 
     $ apt-get update
     $ apt-get install openssh-server sudo rsync
     $ apt-get clean
+
+Elevate the _devops_ user to be able to run commands as root via Sudo:
+
     $ groupadd admin
     $ usermod -a -G admin devops
 
-We add the following line to `/etc/sudoers`:
+Append the following line to `/etc/sudoers`:
 
     %admin ALL=NOPASSWD: ALL
 
-When installation and final configuration is finished, shut down the instance and do not touch it anymore, but clone new virtual machines from there.
-
-You can compress the disk image:
-
-    $ kvm-img convert -c -f qcow2 -O qcow2 -o cluster_size=2M disk.img compressed.img
-    $ mv compressed.img disk.img
+Remove the VNC related _device/graphics_ attribute from the `libvirt_instance.xml` configuration file, since login is provided by SSH now. When installation and final configuration is finished, shut down the instance and do not touch it anymore, but clone new virtual machines from there.
 
 As a last step we add a libvirt configuration used to start a virtual machine instance of this template. Adjust `_config/libvirt_instance.xml` accordingly.
 
@@ -61,7 +64,7 @@ The Golden Image directory should contain the following files at the end:
    * The configuration `libvirt_install.xml` used to install the operating system, for later reference.
    * The configuration `libvirt_instance.xml` used to start a virtual machine. This file needs to be adjusted after the golden image was cloned.
 
-## Password-less Access
+### Password-less Access
 
 Enable SSH based password-less access by adding a SSH configuration **ssh_config** stored in the virtual machines directory, defining the login account name and the virtual machine IP-address:
 
@@ -79,7 +82,12 @@ Another ingredient in this file is the 'IdentityFile', the public part of an SSH
     $ vm exec 'mkdir -p -m 0700 $HOME/.ssh'
     $ vm put keys/id_rsa.pub .ssh/authorized_keys
 
+### Template Compression
 
+You can compress the disk image:
+
+    $ kvm-img convert -c -f qcow2 -O qcow2 -o cluster_size=2M disk.img compressed.img
+    $ mv compressed.img disk.img
 
 # Template Repositories 
 
