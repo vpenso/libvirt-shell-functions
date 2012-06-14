@@ -20,8 +20,8 @@
 #
 #----------------------------------------------------------------
 # Author: Victor Penso
-# Copyright 2011
-_version=1.0
+# Copyright 2011-2012
+_version=1.1
 #----------------------------------------------------------------
 
 
@@ -644,10 +644,11 @@ CHEF_ATTRIBUTES=$(cat <<EOF
 EOF
 )
 
-# Link a list of cookbooks from the Chef cookbook repository 
-# the virtual machine containers cookbooks/ directory.
+# Link a list of cookbooks from the Chef users cookbook 
+# directories to the virtual machine containers cookbooks/ 
+# directory.
 function __vm_chef_cookbook() {
-  # support multiple cookbooks by argument list
+  # add multiple cookbooks at once by argument list
   for cookbook in $@
   do
     # Continue only if cookbook link doesn't exists
@@ -859,7 +860,7 @@ Overwrite environment variables:
    VIRSH_NET_CONFIG
      DNS/DHCP network configuration file.
    CHEF_COOKBOOKS
-     Path to your Chef cookbooks.
+     Paths to your Chef cookbooks (colon separated).
 
 Further information in the README. 
 "
