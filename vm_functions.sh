@@ -615,7 +615,8 @@ hostname to be applied."
 ##
 
 # Path to the users Chef cookbooks
-CHEF_COOKBOOKS=${CHEF_COOKBOOKS:-"$HOME/chef/site-cookbooks"}
+CHEF_COOKBOOKS_DEFAULT="$HOME/chef/cookbooks:$HOME/chef/site-cookbooks"
+CHEF_COOKBOOKS=${CHEF_COOKBOOKS:-$CHEF_COOKBOOKS_DEFAULT}
 
 # This is teh template for the chef-solo configuration file,
 # shipped to the virtual machines before execution.
@@ -646,13 +647,34 @@ EOF
 # Link a list of cookbooks from the Chef cookbook repository 
 # the virtual machine containers cookbooks/ directory.
 function __vm_chef_cookbook() {
-  for _cookbook in $@
+  # support multiple cookbooks by argument list
+  for cookbook in $@
   do
-    if [ -d $CHEF_COOKBOOKS/$_cookbook ] 
+    # Continue only if cookbook link doesn't exists
+    if [ -h $PWD/cookbooks/$cookbook ]
     then
-      ln -v -s $CHEF_COOKBOOKS/$_cookbook $PWD/cookbooks/$_cookbook
-    else
-      _error "Cookbook '$_cookbook' not found!"
+      echo "Cookbook '$cookbook' already linked"
+      continue
+    fi
+    local found=false
+    # support multiple cookbook directories in a colon separated list
+    for cookbook_path in $(echo $CHEF_COOKBOOKS | tr ":" " ")
+    do
+      # if the source cookbook is found
+      if [ -d $cookbook_path/$cookbook ]
+      then
+        if [ ! -h $PWD/cookbooks/$cookbook ]
+        then
+          # link to the source cookbook
+          ln -v -s $cookbook_path/$cookbook $PWD/cookbooks/$cookbook
+          found=""
+          continue
+        fi
+      fi 
+    done
+    if [ "$found"  ]
+    then
+      echo "Cookbook '$cookbook' not found!"
     fi
   done
 }
