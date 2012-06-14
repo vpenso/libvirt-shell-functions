@@ -625,6 +625,7 @@ log_level         :info
 log_location      STDOUT
 verbose_logging   nil
 cookbook_path     ["/var/chef/cookbooks"]
+data_bag_path     "/var/chef/data-bags"
 role_path         "/var/chef/roles"
 cache_type        "BasicFile"
 cache_options({   :path => "/tmp/chef/cache/checksums", :skip_expires => true })
@@ -696,6 +697,9 @@ Commands:
     Adds a role to apply to this virtual machine 
     instance. Roles will be synced each time the 
     configuration process is executed.
+  add data-bag <path>
+    Add data-bags to be synced to the virtual machines
+    each time the configuration process is executed.
   solo
     Execute Chef in solo-mode inside the virtual machine
     instance using defined cookbooks and roles, as 
@@ -707,12 +711,13 @@ Commands:
   case "$1" in
     help) echo $_help ;;
     add)
-      if ! [[ -d $PWD/cookbooks && -d $PWD/roles ]]; then
-        echo -n "Create cookbooks/roles directories? (y/n): "
+      if ! [[ -d $PWD/cookbooks && -d $PWD/roles && -d $PWD/data-bags ]]; then
+        echo -n "Create Chef directories? (y/n): "
         read ans
         if [[ "$ans" == "y" ]]; then
           mkdir $PWD/cookbooks 
           mkdir $PWD/roles
+          mkdir $PWD/data-bags
         else
           return 
         fi
@@ -727,8 +732,17 @@ Commands:
             echo "ERROR: '$3' isn't existing!"
           fi
           ;;
+        data-bag)
+          if [[ -e $3 ]]
+          then
+            local _bag_name=$(basename $3)
+            ln -v -s $3 $PWD/data-bags/$_bag_name
+          else
+            _error "'$3' isn't existing!"
+          fi
+          ;;
         *)
-          echo "ERROR: cookbook|role are available parameters"
+          _error "cookbook|role|data-bag are available parameters"
           ;;
       esac
       ;;
@@ -746,6 +760,11 @@ Commands:
       if [[ -d $PWD/roles ]]; then
         __vm_ssh "[ ! -d /var/chef/roles ] && sudo mkdir -m 777 /var/chef/roles"
         __vm_sync $PWD/roles /var/chef/ >> $PWD/chef.log
+      fi
+      # Sync data-bags if existing
+      if [[ -d $PWD/data-bags ]]; then
+        __vm_ssh "[ ! -d /var/chef/data-bags ] && sudo mkdir -m 777 /var/chef/data-bags"
+        __vm_sync $PWD/data-bags /var/chef >> $PWD/chef.log
       fi
       # Write the chef configuration file if not existing and upload it!
       if [[ ! -e $PWD/chef_config.rb ]]; then
@@ -843,7 +862,7 @@ Commands used in the instance working directory:
     Provision the instance using Chef either in solo
     mode, or configure the client connection to an 
     Chef-server.
-  config add cookbook|role [<cookbook>|<path_to_role>]
+  config add cookbook|role|data-bag [<cookbook>|<path>]
     Add a cookbook to the provison facility, by defing
     a cookbook name as target, or the path to a role
     file as target.
