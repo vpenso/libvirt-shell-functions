@@ -749,10 +749,23 @@ Commands:
     solo)
       touch $PWD/chef.log # create the log file
       # Without at least on cookbook we cannot run!
-      if [ ! -d $PWD/cookbooks -o -z $(find $PWD/cookbooks -maxdepth 1 -type l 2> /dev/null) ]; then
-        _error  "No cookbook found!"
+      if [[ ! -d $PWD/cookbooks  ]]
+      then
+        _error "No Chef cookbooks defined yet."
+        echo "Use: vm config add cookbook <name> [<name>...]"
         return
+      else 
+        cookbooks_found=$(find $PWD/cookbooks -maxdepth 1 -type l 2> /dev/null)
+        if [ ! "$cookbooks_found"  ]
+        then
+          _error "No Chef cookbooks found in cookbooks/"
+          return
+        fi
       fi
+      #if [ -z $(find $PWD/cookbooks -maxdepth 1 -type l 2> /dev/null) ]; then
+      #  _error  "No cookbook found!"
+      #  return
+      #fi
       __vm_ssh "sudo mkdir -p -m 777 /var/chef/cookbooks"
       __vm_ssh 'sudo chmod 777 /var/chef'
       __vm_sync $PWD/cookbooks /var/chef >> $PWD/chef.log
