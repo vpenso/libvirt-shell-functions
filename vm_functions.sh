@@ -602,6 +602,7 @@ hostname to be applied."
       _log "[__vm_clone] Waiting for SSH service to come up."
       # wait for the SSH service to come up
       netcat $_ip 22 -w 30 -q 0 < /dev/null > /dev/null 2>&1
+      sleep 2 # make sure SSH is up
       __vm_hostname $_instance $_ip
     else
       _error"'$_target' exists!"
