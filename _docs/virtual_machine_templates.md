@@ -54,7 +54,7 @@ Append the following line to `/etc/sudoers`:
 
     %admin ALL=NOPASSWD: ALL
 
-Remove the VNC related _device/graphics_ attribute from the `libvirt_instance.xml` configuration file, since login is provided by SSH now. When installation and final configuration is finished, shut down the instance and do not touch it anymore, but clone new virtual machines from there.
+**Remove the VNC related <i>device/graphics</i> attribute from the `libvirt_instance.xml` configuration file**, since login is provided by SSH now. When installation and final configuration is finished, shut down the instance and do not touch it anymore, but clone new virtual machines from there.
 
 The virtual machine template directory should contain the following files at the end:
 

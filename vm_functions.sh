@@ -440,6 +440,14 @@ Available commands are:
   esac
 }
 
+function __vm_template_remote_set() {
+  if [ -z "$KVM_REMOTE_IMAGES" ]
+  then
+    echo "Please define \$KVM_REMOTE_IMAGES to continue."
+    return 1
+  fi
+  return 0
+}
 
 function vmtemplate() {
   local _suffix=".kvm.tgz"
@@ -448,41 +456,50 @@ function vmtemplate() {
       find $KVM_GOLDEN_IMAGES -maxdepth 1 -mindepth 1 -type d -printf "%P\n" | sort
       ;;
     remote)
-      case "$2" in
-        list)
-          local _name=`echo $KVM_REMOTE_IMAGES | cut -d: -f1`
-          local _path=`echo $KVM_REMOTE_IMAGES | cut -d: -f2`
-          ssh $_name "find $_path -name '*$_suffix' -printf '%P\n' | sort"
-          ;;
-        upload)
-          cd $KVM_GOLDEN_IMAGES
-          tar -czf $3$_suffix $3
-          scp $3$_suffix $KVM_REMOTE_IMAGES
-          cd -
-          ;;
-        download)
-          local _ans=
-          cd $KVM_GOLDEN_IMAGES
-          if [[ -f $3 ]]; then
-            echo -n "Overwrite? (y/n): "
-            read _ans
-          else
-            _ans="y"
-          fi
-          if [[ "$_ans" == "y" ]]; then
-            scp $KVM_REMOTE_IMAGES/$3 .
-            echo -n "Decompressing image..."
-            tar -xzf $3
+      # Make sure the template remote location is set. 
+      __vm_template_remote_set
+      if [ $? -eq 0 ]
+      then
+        case "$2" in
+          list)
+            local _name=`echo $KVM_REMOTE_IMAGES | cut -d: -f1`
+            local _path=`echo $KVM_REMOTE_IMAGES | cut -d: -f2`
+            ssh $_name "find $_path -name '*$_suffix' -printf '%P\n' | sort"
+            ;;
+          upload)
+            cd $KVM_GOLDEN_IMAGES
+            echo -n "Compressing template image $3..."
+            tar -czf $3$_suffix $3
             echo "done"
-          fi
-          cd -
-          ;;
-        *)
-          echo "Error: list|upload|download are available parameters!"
-          echo "Remote KVM virtual machine images are stored in:"
-          echo "  KVM_REMOTE_IMAGES=$KVM_REMOTE_IMAGES"
-          ;;
-      esac
+            scp $3$_suffix $KVM_REMOTE_IMAGES
+            cd -
+            ;;
+          download)
+            # Don't overwrite exiting templates
+            local _ans=
+            cd $KVM_GOLDEN_IMAGES
+            if [[ -f $3 ]]; then
+              echo -n "Overwrite? (y/n): "
+              read _ans
+            else
+              _ans="y"
+            fi
+            if [[ "$_ans" == "y" ]]; then
+              # Download the image
+              scp $KVM_REMOTE_IMAGES/$3 .
+              echo -n "Decompressing image..."
+              tar -xzf $3
+              echo "done"
+            fi
+            cd -
+            ;;
+          *)
+            echo "Error: list|upload|download are available parameters!"
+            echo "Remote KVM virtual machine images are stored in:"
+            echo "  KVM_REMOTE_IMAGES=$KVM_REMOTE_IMAGES"
+            ;;
+        esac
+      fi
       ;;
     *)
       echo "Error: list|remote are available parameters!"
@@ -599,10 +616,9 @@ hostname to be applied."
         echo -n '.'
       done
       echo "done"
-      _log "[__vm_clone] Waiting for SSH service to come up."
       # wait for the SSH service to come up
       netcat $_ip 22 -w 30 -q 0 < /dev/null > /dev/null 2>&1
-      sleep 2 # make sure SSH is up
+      _log "[__vm_clone] SSH service at port 22 online."
       __vm_hostname $_instance $_ip
     else
       _error"'$_target' exists!"
