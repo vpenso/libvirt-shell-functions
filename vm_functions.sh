@@ -393,17 +393,34 @@ function __vm_hostname() {
 ##
 
 
-# Port-forwarding of a host port to a virtual machine instance
-# port.
-#
-#  vmmap lxdev01.devops.test:22 2201
-#
-function vmportforward() {
-  local _name=`echo $1 | cut -d: -f1`
-  local _ip=$(__vm_ip $_name)
-  local _port=`echo $1 | cut -d: -f2`
-  sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport $2 -j DNAT --to $_ip:$_port
-  sudo iptables -I FORWARD 1 -p tcp -d $_ip --dport $_port -j ACCEPT
+# Port-forwarding of a host port to a virtual machine instance  port.
+function __vm_port_forward() {
+  local _ip_space="10.1.1"
+  case "$1" in
+  list)
+    echo "NAT rules:"
+    sudo iptables -L -n -t nat | grep $_ip_space
+    echo "Forwarding:"
+    sudo iptables -L FORWARD -n | grep $_ip_space
+    ;;
+  add)
+    local _name=`echo $2 | cut -d: -f1`
+    local _ip=$(__vm_ip $_name)
+    local _port=`echo $2 | cut -d: -f2`
+    sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport $3 -j DNAT --to $_ip:$_port
+    sudo iptables -I FORWARD 1 -p tcp  -d $_ip --dport $_port -j ACCEPT
+    ;;
+  drop)
+    local _name=`echo $2 | cut -d: -f1`
+    local _ip=$(__vm_ip $_name)
+    local _port=`echo $2 | cut -d: -f2`
+    sudo iptables -D PREROUTING -t nat -i eth0 -p tcp --dport $3 -j DNAT --to $_ip:$_port
+    sudo iptables -D FORWARD -p tcp  -d $_ip --dport $_port -j ACCEPT
+    ;;
+  *)
+    echo "vm forward <list|add|drop> [FQDN:PORT] [PORT]"
+    ;;
+  esac
 }
 
 # -----------------------------------------------------------
@@ -931,7 +948,7 @@ function vm() {
   template) shift; vmtemplate $@ ;;
   clone) shift; __vm_clone $@ ;;
   shadow) shift; _clone_shadow=true __vm_clone $@ ;;
-  forward) shift; vmportforward $@ ;;
+  forward) shift; __vm_port_forward $@ ;;
   help) echo "$HELP" ;;
   *)
     # the following commands can only be executed inside

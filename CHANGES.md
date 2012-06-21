@@ -1,3 +1,6 @@
+# 1.2
+
+* `vm forward` can list and drop iptables rules now.
 
 # 1.1
 
