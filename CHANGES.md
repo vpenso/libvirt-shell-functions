@@ -1,6 +1,9 @@
 # 1.2
 
 * `vm forward` can list and drop iptables rules now.
+* [BUG] `chef_attributes.json` and `chef_config.rb` 
+  should be gnerated with proper line-feeds in Bash,
+  now.
 
 # 1.1
 

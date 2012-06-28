@@ -815,11 +815,11 @@ Commands:
       fi
       # Write the chef configuration file if not existing and upload it!
       if [[ ! -e $PWD/chef_config.rb ]]; then
-        echo $CHEF_SOLO_CONFIG > $PWD/chef_config.rb
+        echo "$CHEF_SOLO_CONFIG" > $PWD/chef_config.rb
       fi
       __vm_put chef_config.rb /var/chef/config.rb
       if [[ ! -e $PWD/chef_attributes.json ]]; then
-        echo $CHEF_ATTRIBUTES > $PWD/chef_attributes.json
+        echo "$CHEF_ATTRIBUTES" > $PWD/chef_attributes.json
         echo "INFO: No attributes definition to run chef-solo!"
         echo "Add cookbooks,roles and attributes to the file ./chef_attributes.json"
         return
