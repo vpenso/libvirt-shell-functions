@@ -300,7 +300,7 @@ upload a differential sync is done."
   fi
 }
 
-# us SSHFS to mount the virtual machine instance root-directory
+# use SSHFS to mount the virtual machine instance root-directory
 function __vm_fs() {
   local _help=\
 "Usage: vm fs mount|umount
@@ -580,7 +580,7 @@ hostname to be applied."
     echo $_help
   # Otherwise clone the instance
   else
-    # make sure to outside a virtual machine container
+    # make sure to be outside a virtual machine container
     cd /tmp
     # virtual machine image to use for cloning
     local _template=$KVM_GOLDEN_IMAGES/$1
@@ -652,7 +652,7 @@ hostname to be applied."
 CHEF_COOKBOOKS_DEFAULT="$HOME/chef/cookbooks:$HOME/chef/site-cookbooks"
 CHEF_COOKBOOKS=${CHEF_COOKBOOKS:-$CHEF_COOKBOOKS_DEFAULT}
 
-# This is teh template for the chef-solo configuration file,
+# This is the template for the chef-solo configuration file,
 # shipped to the virtual machines before execution.
 CHEF_SOLO_CONFIG=$(cat <<EOF
 log_level         :info
@@ -686,7 +686,7 @@ function __vm_chef_cookbook() {
   # add multiple cookbooks at once by argument list
   for cookbook in $@
   do
-    # Continue only if cookbook link doesn't exists
+    # Continue only if cookbook link doesn't exist
     if [ -h $PWD/cookbooks/$cookbook ]
     then
       echo "Cookbook '$cookbook' already linked"
@@ -782,7 +782,7 @@ Commands:
       ;;
     solo)
       touch $PWD/chef.log # create the log file
-      # Without at least on cookbook we cannot run!
+      # Without at least one cookbook we cannot run!
       if [[ ! -d $PWD/cookbooks  ]]
       then
         _error "No Chef cookbooks defined yet."
@@ -961,7 +961,7 @@ function vm() {
       remove) __vm_instance_remove ;;
       image) shift; __vm_image $@ ;; 
       *) 
-        # the following commands can only be execute when
+        # the following commands can only be executed when
         # the virtual machine is running
         if $(__vm_instance_running $(__vm_name)) ; then
           case "$_command" in
@@ -971,6 +971,7 @@ function vm() {
           sync) shift; __vm_sync $@ ;;
           fs) shift; __vm_fs $@ ;;
           config) shift; __vm_chef $@ ;;
+	  *) _error "Unknown command: '$1'.  Run 'vm help' for get a list of available commands." ;;
           esac
         else
           _error "Virtual machine '$(__vm_name)' not running."
