@@ -986,6 +986,4 @@ function vm() {
 }
 
 echo "vm-functions loaded (Version $_version)"
-echo "Run the 'vm help' for a command overview."
-
 

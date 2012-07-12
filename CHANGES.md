@@ -1,9 +1,9 @@
-# 1.2
+# 1.2 (not released)
 
+* Using virtio for the libvirt templates as default.
 * `vm forward` can list and drop iptables rules now.
 * [BUG] `chef_attributes.json` and `chef_config.rb` 
-  should be gnerated with proper line-feeds in Bash,
-  now.
+  should be generated with proper line-feeds in Bash.
 
 # 1.1
 

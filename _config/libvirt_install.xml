@@ -1,6 +1,6 @@
 <domain type='kvm'>
   <name>NAME</name>
-  <memory>524288</memory>
+  <memory>1048576</memory>
   <vcpu>1</vcpu>
   <os>
     <type arch="x86_64">hvm</type>
@@ -11,11 +11,12 @@
     <emulator>/usr/bin/kvm</emulator>
     <disk type='file' device='disk'>
       <source file='PATH_TO_DISK_IMAGE/disk.img'/>
-      <target dev='hda'/>
+      <target dev='vda' bus='virtio'/>
       <driver name='qemu' type='qcow2'/>
     </disk>
     <interface type='bridge'>
       <source bridge='nbr0'/>
+      <modul type='virtio/>'
     </interface>
     <graphics type='vnc' port='5901'/>
     <disk type='file' device='cdrom'>
