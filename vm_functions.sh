@@ -21,7 +21,7 @@
 #----------------------------------------------------------------
 # Author: Victor Penso
 # Copyright 2011-2012
-_version=1.1
+_version=1.2
 #----------------------------------------------------------------
 
 
@@ -39,7 +39,7 @@ function _log() {
 }
 # alert the user about a problem
 function _error() { 
-  echo 1>&2 "error: $@" 
+  echo 1>&2 "ERROR: $@" 
 }
 
 # ----------------------------------------------------------------------
@@ -702,8 +702,9 @@ function __vm_chef_cookbook() {
         if [ ! -h $PWD/cookbooks/$cookbook ]
         then
           # link to the source cookbook
-          ln -v -s $cookbook_path/$cookbook $PWD/cookbooks/$cookbook
+          ln  -s $cookbook_path/$cookbook $PWD/cookbooks/$cookbook
           found=""
+          echo "Cookbook '$cookbook' added"
           continue
         fi
       fi 
@@ -713,6 +714,23 @@ function __vm_chef_cookbook() {
       echo "Cookbook '$cookbook' not found!"
     fi
   done
+}
+
+function __vm_chef_role() {
+  local role=$1
+  local name=$(basename $role)
+  if [ -h $PWD/roles/$name ]
+  then
+    echo "Role '$name' already linked"
+  else
+    if [[ -e $role ]]
+    then
+      ln -s $role $PWD/roles/$name
+      echo "Role '$name' added."
+    else
+      echo "ERROR: Role '$name' isn't existing!"
+    fi
+  fi
 }
 
 function __vm_chef() {
@@ -758,14 +776,7 @@ Commands:
       fi
       case "$2" in
         cookbook) shift; shift; __vm_chef_cookbook $@ ;;
-        role)
-          if [[ -e $3 ]]; then
-            local _name=$(basename $3)
-            ln -v -s $3 $PWD/roles/$_name
-          else
-            echo "ERROR: '$3' isn't existing!"
-          fi
-          ;;
+        role) shift; shift; __vm_chef_role $@ ;;
         data-bag)
           if [[ -e $3 ]]
           then

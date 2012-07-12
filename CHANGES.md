@@ -1,5 +1,7 @@
-# 1.2 (not released)
+# 1.2
 
+* `vm config add role` print more verbose output for
+  users.
 * Using virtio for the libvirt templates as default.
 * `vm forward` can list and drop iptables rules now.
 * [BUG] `chef_attributes.json` and `chef_config.rb` 
