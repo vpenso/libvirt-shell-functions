@@ -908,6 +908,8 @@ Commands used in the instance working directory:
     Shutdown and remove VM from system.
   exec <command>
     Run a command inside the instance.
+  sudo <command>
+    Run a command inside the instance with Sudo.
   put <local_file> <instance_file>       
     Upload a file to the instance.
   get <instance_file> <local_file>       
@@ -921,7 +923,7 @@ Commands used in the instance working directory:
     mode, or configure the client connection to an 
     Chef-server.
   config add cookbook|role|data-bag [<cookbook>|<path>]
-    Add a cookbook to the provison facility, by defing
+    Add a cookbook to the provision facility, by defining
     a cookbook name as target, or the path to a role
     file as target.
   image info|snapshot
@@ -978,6 +980,7 @@ function vm() {
           case "$_command" in
           put) shift; __vm_put $@ ;;
           exec) shift; __vm_ssh "$@" ;;
+          sudo) shift; __vm_ssh "sudo $@" ;;
           get) shift; __vm_get $@ ;;
           sync) shift; __vm_sync $@ ;;
           fs) shift; __vm_fs $@ ;;

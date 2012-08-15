@@ -1,3 +1,7 @@
+# next version
+
+* Adding a command `vm sudo`.
+
 # 1.2
 
 * `vm config add role` print more verbose output for
