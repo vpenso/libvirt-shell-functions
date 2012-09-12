@@ -3,6 +3,19 @@
   <bridge name="nbr0" />
   <forward mode="nat"/>
   <domain name="devops.test"/>
+  <dns>
+    <host ip="10.1.1.3"><hostname>lxcm01</hostname></host>
+    <host ip="10.1.1.4"><hostname>lxrm01</hostname></host>
+    <host ip="10.1.1.5"><hostname>lxb001</hostname></host>
+    <host ip="10.1.1.6"><hostname>lxb002</hostname></host>
+    <host ip="10.1.1.7"><hostname>lxb003</hostname></host>
+    <host ip="10.1.1.8"><hostname>lxb004</hostname></host>
+    <host ip="10.1.1.9"><hostname>lxmon01</hostname></host>
+    <host ip="10.1.1.10"><hostname>lxfs01</hostname></host>
+    <host ip="10.1.1.11"><hostname>lxdev01</hostname></host>
+    <host ip="10.1.1.12"><hostname>lxdev02</hostname></host>
+    <host ip="10.1.1.13"><hostname>lxdev03</hostname></host>
+  </dns>
   <ip address="10.1.1.1" netmask="255.255.255.0">
     <dhcp>
       <range start="10.1.1.20" end="10.1.1.254" />

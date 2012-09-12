@@ -1,7 +1,9 @@
 # next version
 
+* Adding DNS config to `_config/libvirt_nat_bridge.xml`
 * Adding a command `vm sudo`.
-* [BUG] `_config/libvirt/install.xml` screwup with attribute quotation marks
+* [BUG] `_config/libvirt_install.xml` screwup with attribute quotation marks
+* [BUG] `_config/libvirt_instance.xml` missing '/' in tag 
 
 # 1.2
 

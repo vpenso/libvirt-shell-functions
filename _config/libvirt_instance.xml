@@ -17,7 +17,7 @@
     <interface type="bridge">
       <source bridge="nbr0"/>
       <mac address="02:FF:0A:0A:06:0D"/>
-      <modul type="virtio">
+      <modul type="virtio"/>
     </interface>
     <graphics type='vnc' port='5901'/>
   </devices>
