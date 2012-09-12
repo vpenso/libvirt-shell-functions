@@ -1,6 +1,7 @@
 # next version
 
 * Adding a command `vm sudo`.
+* [BUG] `_config/libvirt/install.xml` screwup with attribute quotation marks
 
 # 1.2
 

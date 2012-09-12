@@ -16,7 +16,7 @@
     </disk>
     <interface type='bridge'>
       <source bridge='nbr0'/>
-      <modul type='virtio/>'
+      <modul type='virtio'/>
     </interface>
     <graphics type='vnc' port='5901'/>
     <disk type='file' device='cdrom'>
