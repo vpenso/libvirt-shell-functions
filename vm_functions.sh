@@ -560,10 +560,10 @@ function __vm_instance_remove {
     _log "[__vm_instance_remove] Killing instance '$_instance'."
     virsh destroy $_instance > /dev/null 2>&1
     sleep 1 # wait for the instance to be killed
-    _log "[__vm_instance_remove] Un-define instance: '$_instance'."
-    virsh undefine $_instance > /dev/null 2>&1
-    echo "Instance $_instance removed"
   fi
+  _log "[__vm_instance_remove] Un-define instance: '$_instance'."
+  virsh undefine $_instance > /dev/null 2>&1
+  echo "Instance $_instance removed"
 }
 
 function __vm_clone() {
@@ -764,15 +764,9 @@ Commands:
     help) echo $_help ;;
     add)
       if ! [[ -d $PWD/cookbooks && -d $PWD/roles && -d $PWD/data-bags ]]; then
-        echo -n "Create Chef directories? (y/n): "
-        read ans
-        if [[ "$ans" == "y" ]]; then
-          mkdir $PWD/cookbooks 
-          mkdir $PWD/roles
-          mkdir $PWD/data-bags
-        else
-          return 
-        fi
+        mkdir $PWD/cookbooks > /dev/null 
+        mkdir $PWD/roles > /dev/null
+        mkdir $PWD/data-bags > /dev/null
       fi
       case "$2" in
         cookbook) shift; shift; __vm_chef_cookbook $@ ;;
