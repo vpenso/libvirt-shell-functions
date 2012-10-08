@@ -1,4 +1,4 @@
-# next version
+# 1.3
 
 * `vm network lookup` pints in `/etc/hosts/` friendly format
 * `vm config add` creats directories silently
