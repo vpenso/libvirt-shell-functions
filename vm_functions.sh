@@ -185,7 +185,7 @@ to the internal DNS server."
     ;; 
   lookup)
     xmlstarlet sel -t -m "//network/ip/dhcp/host" \
-      -v "@name" -o " -- " -v "@ip" -n $VIRSH_NET_CONFIG
+      -v "@ip" -o " " -v "@name" -n $VIRSH_NET_CONFIG
     ;;
   *) echo $_help ;;
   esac
@@ -635,6 +635,7 @@ hostname to be applied."
       echo "done"
       # wait for the SSH service to come up
       netcat $_ip 22 -w 30 -q 0 < /dev/null > /dev/null 2>&1
+      sleep 2
       _log "[__vm_clone] SSH service at port 22 online."
       __vm_hostname $_instance $_ip
     else
@@ -764,9 +765,9 @@ Commands:
     help) echo $_help ;;
     add)
       if ! [[ -d $PWD/cookbooks && -d $PWD/roles && -d $PWD/data-bags ]]; then
-        mkdir $PWD/cookbooks > /dev/null 
-        mkdir $PWD/roles > /dev/null
-        mkdir $PWD/data-bags > /dev/null
+        mkdir -p $PWD/cookbooks
+        mkdir -p $PWD/roles 
+        mkdir -p $PWD/data-bags 
       fi
       case "$2" in
         cookbook) shift; shift; __vm_chef_cookbook $@ ;;

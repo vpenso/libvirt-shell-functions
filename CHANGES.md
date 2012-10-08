@@ -1,5 +1,6 @@
 # next version
 
+* `vm network lookup` pints in `/etc/hosts/` friendly format
 * `vm config add` creats directories silently
 * [BUG] `vm remove` should undefine VM even if it is shutdown already
 * Adding DNS config to `_config/libvirt_nat_bridge.xml`
