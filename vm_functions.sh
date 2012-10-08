@@ -548,8 +548,14 @@ function __vm_instance_start() {
   _log "[__vm_instance_start] Stating instance '$_instance'."
   virsh start $_instance > /dev/null # display error messages
   if [ $? -eq 0 ]
-  then echo "Instance $_instance started"
+  then echo "Boot instance $_instance"
   fi
+}
+
+function __vm_instance_stop() {
+  _log "[__vm_instance_stop] Sending shutdown signal to VM ID '$(vmid)'"
+  virsh shutdown $(vmid) > /dev/null 
+  echo "Shutdown instance $(__vm_name)"
 }
 
 # kills the instance without graceful shutdown and
@@ -964,7 +970,7 @@ function vm() {
     if $(__vm_container_directory); then
       case "$_command" in
       start) __vm_instance_start ;;
-      stop) virsh shutdown $(vmid) ;;
+      stop) __vm_instance_stop ;;
       kill) virsh destroy $(vmid) ;;
       remove) __vm_instance_remove ;;
       image) shift; __vm_image $@ ;; 

@@ -1,3 +1,7 @@
+# next version
+
+* `vm start|stop` print better user output now
+
 # 1.3
 
 * `vm network lookup` pints in `/etc/hosts/` friendly format
