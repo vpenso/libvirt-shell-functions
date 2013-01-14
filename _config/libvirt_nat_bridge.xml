@@ -11,7 +11,7 @@
     <host ip="10.1.1.7"><hostname>lxb003</hostname></host>
     <host ip="10.1.1.8"><hostname>lxb004</hostname></host>
     <host ip="10.1.1.9"><hostname>lxmon01</hostname></host>
-    <host ip="10.1.1.10"><hostname>lxfs01</hostname></host>
+    <host ip="10.1.1.10"><hostname>lxmon02</hostname></host>
     <host ip="10.1.1.11"><hostname>lxdev01</hostname></host>
     <host ip="10.1.1.12"><hostname>lxdev02</hostname></host>
     <host ip="10.1.1.13"><hostname>lxdev03</hostname></host>
@@ -22,6 +22,12 @@
     <host ip="10.1.1.18"><hostname>lxb009</hostname></host>
     <host ip="10.1.1.19"><hostname>lxb010</hostname></host>
     <host ip="10.1.1.20"><hostname>lxrm02</hostname></host>
+    <host ip="10.1.1.21"><hostname>lxfs01</hostname></host>
+    <host ip="10.1.1.22"><hostname>lxfs02</hostname></host>
+    <host ip="10.1.1.23"><hostname>lxfs03</hostname></host>
+    <host ip="10.1.1.24"><hostname>lxfs04</hostname></host>
+    <host ip="10.1.1.25"><hostname>lxfs05</hostname></host>
+    <host ip="10.1.1.26"><hostname>lxfs06</hostname></host>
   </dns>
   <ip address="10.1.1.1" netmask="255.255.255.0">
     <dhcp>
@@ -34,7 +40,7 @@
       <host mac="02:FF:0A:0A:06:07" ip="10.1.1.7" name="lxb003.devops.test"/>
       <host mac="02:FF:0A:0A:06:08" ip="10.1.1.8" name="lxb004.devops.test"/>
       <host mac="02:FF:0A:0A:06:09" ip="10.1.1.9" name="lxmon01.devops.test"/>
-      <host mac="02:FF:0A:0A:06:0A" ip="10.1.1.10" name="lxfs01.devops.test"/>
+      <host mac="02:FF:0A:0A:06:0A" ip="10.1.1.10" name="lxmon02.devops.test"/>
       <host mac="02:FF:0A:0A:06:0B" ip="10.1.1.11" name="lxdev01.devops.test"/>
       <host mac="02:FF:0A:0A:06:0C" ip="10.1.1.12" name="lxdev02.devops.test"/>
       <host mac="02:FF:0A:0A:06:0D" ip="10.1.1.13" name="lxdev03.devops.test"/>
@@ -45,6 +51,12 @@
       <host mac="02:FF:0A:0A:06:16" ip="10.1.1.18" name="lxb009.devops.test"/>
       <host mac="02:FF:0A:0A:06:17" ip="10.1.1.19" name="lxb010.devops.test"/>
       <host mac="02:FF:0A:0A:06:18" ip="10.1.1.20" name="lxrm02.devops.test"/>
+      <host mac="02:FF:0A:0A:06:19" ip="10.1.1.21" name="lxfs01.devops.test"/>
+      <host mac="02:FF:0A:0A:06:1A" ip="10.1.1.22" name="lxfs02.devops.test"/>
+      <host mac="02:FF:0A:0A:06:1B" ip="10.1.1.23" name="lxfs03.devops.test"/>
+      <host mac="02:FF:0A:0A:06:1C" ip="10.1.1.24" name="lxfs04.devops.test"/>
+      <host mac="02:FF:0A:0A:06:1D" ip="10.1.1.25" name="lxfs05.devops.test"/>
+      <host mac="02:FF:0A:0A:06:1E" ip="10.1.1.26" name="lxfs06.devops.test"/>
     </dhcp>
   </ip>
 </network>

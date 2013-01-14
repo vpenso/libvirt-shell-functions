@@ -47,6 +47,13 @@ virtual machines:
     $ sudo adduser `id -un` libvirt
     $ sudo adduser `id -un` kvm
 
+Make sure to add your account name to `/etc/libvirt/qemu.conf`,
+
+    user = "USER"
+
+where `USER` is the name of the user that should be able to start 
+VMs talking to the system qemu/libvirt bus.
+
 *Re-login* to activate these group rights. Add the following to 
 your shell environment to make sure to communicate only to the 
 system-wide instance of _libvirtd_.

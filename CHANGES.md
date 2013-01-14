@@ -1,6 +1,8 @@
 # next version
 
-* `vm start|stop` print better user output now
+* `vm start|stop` prints better user output now
+* Adding a couple of preconfigured DNS names `lxfs0[1-6]`
+* Improvments in the installation documentation.
 
 # 1.3
 
