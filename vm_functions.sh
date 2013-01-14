@@ -55,7 +55,9 @@ KVM_VM_INSTANCES=${KVM_VM_INSTANCES:-"/srv/vms/instances"}
 # Golden images used to clone virtual machines from
 KVM_GOLDEN_IMAGES=${KVM_IMAGES:-"/srv/vms/images"}
 # Remote location for golden images
-KVM_REMOTE_IMAGES=''
+if [ -z "$KVM_REMOTE_IMAGES" ]; then
+  echo "Please set '\$KVM_REMOTE_IMAGES' to use remote VM images!"
+fi
 # Network configuration to libvirt
 VIRSH_NET_CONFIG=${VIRSH_NET_CONFIG:-"/srv/vms/_config/libvirt_nat_bridge.xml"}
 # Network domain

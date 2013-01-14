@@ -2,7 +2,9 @@
 
 * `vm start|stop` prints better user output now
 * Adding a couple of preconfigured DNS names `lxfs0[1-6]`
-* Improvments in the installation documentation.
+* Improvements in the installation documentation.
+* [BUG] Don't overwrite `$KVM_REMOTE_IMAGES`.
+* Display a message to indicate `$KVM_REMOTE_IMAGES` isn't set.
 
 # 1.3
 
