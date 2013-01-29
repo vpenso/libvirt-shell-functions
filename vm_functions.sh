@@ -204,8 +204,9 @@ function __vm_name() {
   fi
 }
 
-function vmid() { 
-  virsh list --all | awk '{gsub(/^ +| +$/,"")}1' | grep $(__vm_name) | cut -d' ' -f2 
+function __vm_id() { 
+  #virsh list --all | awk '{gsub(/^ +| +$/,"")}1' | grep $(__vm_name) | cut -d' ' -f2 
+  virsh list --all | awk '/'$(__vm_name)'/ {gsub(/^[ ]*/,""); print $1}'
 }
 
 
@@ -445,10 +446,10 @@ Available commands are:
   info) kvm-img info $PWD/disk.img ;;
   snapshot)
     case "$_sub_command" in
-    list) virsh snapshot-list $(vmid) ;;
-    create) virsh snapshot-create $(vmid) ;;
-    restore) virsh snapshot-revert $(vmid) $3 ;;
-    delete) virsh snapshot-delete $(vmid) $3 ;;
+    list) virsh snapshot-list $(__vm_id) ;;
+    create) virsh snapshot-create $(__vm_id) ;;
+    restore) virsh snapshot-revert $(__vm_id) $3 ;;
+    delete) virsh snapshot-delete $(__vm_id) $3 ;;
     *) _error "list|create|restore|delete are available commands!" ;;
     esac
     ;;
@@ -555,8 +556,8 @@ function __vm_instance_start() {
 }
 
 function __vm_instance_stop() {
-  _log "[__vm_instance_stop] Sending shutdown signal to VM ID '$(vmid)'"
-  virsh shutdown $(vmid) > /dev/null 
+  _log "[__vm_instance_stop] Sending shutdown signal to VM ID '$(__vm_id)'"
+  virsh shutdown $(__vm_id) > /dev/null 
   echo "Shutdown instance $(__vm_name)"
 }
 
@@ -973,7 +974,7 @@ function vm() {
       case "$_command" in
       start) __vm_instance_start ;;
       stop) __vm_instance_stop ;;
-      kill) virsh destroy $(vmid) ;;
+      kill) virsh destroy $(__vm_id) ;;
       remove) __vm_instance_remove ;;
       image) shift; __vm_image $@ ;; 
       *) 

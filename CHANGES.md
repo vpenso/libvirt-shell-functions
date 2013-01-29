@@ -1,5 +1,8 @@
 # next version
 
+* Add contributors list.
+* Solve compatibility issue with `virsh list`
+* Rename function `vmid` to `__vm_id`
 * `vm start|stop` prints better user output now
 * Adding a couple of preconfigured DNS names `lxfs0[1-6]`
 * Improvements in the installation documentation.
