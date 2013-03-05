@@ -1,5 +1,6 @@
-# next version
+# 1.4 (coming version)
 
+* Restructured documentation.
 * Add contributors list.
 * Solve compatibility issue with `virsh list`
 * Rename function `vmid` to `__vm_id`

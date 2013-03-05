@@ -63,7 +63,7 @@ Use the commands **start** and **stop** to boot and shutdown a specific instance
 
 Start and stop only power on and off a specific instance. The clone command deploys a virtual machine persistently. This means that stopped virtual machine instances are still registered in the system. In order to remove them permanently it necessary to use the command **remove**. 
 
-Continue reading the [usage](_docs/usage.md). 
+[Continue reading...](usage.md). 
 
 [1]: installation.md
 [2]: templates.md
