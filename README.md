@@ -1,33 +1,36 @@
 Description
 ===========
 
-Shell functions (Zsh/Bash) to manage local virtual machines.
+Shell functions (Zsh/Bash) to manage clusters of local 
+virtual machines on your workstation.
 
 The following use-cases are supported:
 
-* Easy virtual machine networking setup.
-* Easy use of shared virtual machine templates.
-* Easy creation of virtual machine instances.
-* Easy data sharing between virtual machine instances and your workstation.
-* Snapshot virtual machines and backup to remote storage.
-* Exchange of virtual machines between co-workers.
-* Managing of complex virtual machine clusters running on your workstation.
-* Provisioning of virtual machines with configuration management tools like Chef.
+* Setup of a [shared NATed network](_docs/nat_bridge.md) for all virtual 
+machine instances. Enable external access to virtual machine instances
+with [port forwarding](_docs/forward_port.md).
+* Share virtual machine templates among coworkers.
+* Manage the life cycle of multiple virtual machine instances.
+* Data sharing between virtual machine instances and your workstation.
+* Snapshot virtual machines and copy backup to remote storage.
+* Provisioning of virtual machines with configuration management tool Chef.
 
-We aim for very simple and lightweight code, and very transparent handling of external dependencies like KVM, LibVirt, Qemu, SSH, Rsync, SSHfs and Chef. 
+We aim for very simple and lightweight code, and very transparent 
+handling of external dependencies like:
 
-Find the **Installation Instructions** in:
+* KVM 
+* LibVirt
+* SSH, Rsync, SSHfs 
+* Chef 
 
-    _docs/installation.md
-
-Get started by reading:
-
-    _docs/getting_started.md
+Follow the [Installation Instructions](docs/installation.md) to
+prepare your workstation for virtualization. Afterwards continue
+reading [Getting Started](_docs/getting_started.md).
 
 Copying
 =======
 
-Copyright 2011-2012 Victor Penso
+Copyright 2011-2013 Victor Penso
 
 Libvirt-Shell-Functions for working with virtual machines.
 
