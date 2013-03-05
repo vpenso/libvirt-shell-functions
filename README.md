@@ -7,11 +7,11 @@ virtual machines on your workstation.
 The following use-cases are supported:
 
 * Setup of a [shared NATed network](_docs/nat_bridge.md) for all virtual 
-machine instances. Enable external access to virtual machine instances
-with [port forwarding](_docs/forward_port.md).
+machine instances. 
+* Manage the life cycle of multiple [virtual machine instances](_docs/instances.md).
+* [Data sharing](share_data.md) between virtual machine instances and your workstation.
+* Enable external access to virtual machine instances with [port forwarding](_docs/forward_port.md).
 * Share virtual machine templates among coworkers.
-* Manage the life cycle of multiple virtual machine instances.
-* Data sharing between virtual machine instances and your workstation.
 * Snapshot virtual machines and copy backup to remote storage.
 * Provisioning of virtual machines with configuration management tool Chef.
 
