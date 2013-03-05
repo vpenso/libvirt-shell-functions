@@ -9,11 +9,11 @@ The following use-cases are supported:
 * Setup of a [shared NATed network](_docs/nat_bridge.md) for all virtual 
 machine instances. 
 * Manage the life cycle of multiple [virtual machine instances](_docs/instances.md).
-* [Data sharing](share_data.md) between virtual machine instances and your workstation.
+* [Data sharing](_docs/share_data.md) between virtual machine instances and your workstation.
 * Enable external access to virtual machine instances with [port forwarding](_docs/forward_port.md).
-* Share virtual machine templates among coworkers.
-* Snapshot virtual machines and copy backup to remote storage.
-* Provisioning of virtual machines with configuration management tool Chef.
+* [Share virtual machine templates](_docs/template_repos.md) among coworkers.
+* [Snapshot virtual machines](_docs/snapshots.md) and copy backup to remote storage.
+* [Provisioning of virtual machines](_docs/provisioning.md) with configuration management tool Chef.
 
 We aim for very simple and lightweight code, and very transparent 
 handling of external dependencies like:

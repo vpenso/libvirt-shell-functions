@@ -66,5 +66,5 @@ Start and stop only power on and off a specific instance. The clone command depl
 Find more [detailed instruction][3] in the manual about virtual machine instances. 
 
 [1]: installation.md
-[2]: virtual_machine_templates.md
-[3]: virtual_machine_instances.md
+[2]: templates.md
+[3]: instances.md
