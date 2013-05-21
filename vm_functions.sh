@@ -258,7 +258,7 @@ second is the path inside the virtual machine file-system."
     local _source=$1
     local _destination=$2
     _log "[__vm_put] Uploading file '$_source' to '$(__vm_name):$_destination'."
-    scp -q -F $PWD/ssh_config $_source instance:$_destination
+    scp -q -r -F $PWD/ssh_config $_source instance:$_destination
   fi
 }
 
@@ -277,7 +277,7 @@ file."
     local _source=$1
     local _destination=$2
     _log "[__vm_get] Downloading file '$(__vm_name):$_source' to '$_destination'."
-    scp -q -F $PWD/ssh_config instance:$_source $_destination
+    scp -q -r -F $PWD/ssh_config instance:$_source $_destination
   fi
 }
 

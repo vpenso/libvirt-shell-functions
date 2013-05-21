@@ -4,11 +4,12 @@
 * Add contributors list.
 * Solve compatibility issue with `virsh list`
 * Rename function `vmid` to `__vm_id`
-* `vm start|stop` prints better user output now
-* Adding a couple of preconfigured DNS names `lxfs0[1-6]`
+* `vm start|stop` prints better user output.
+* Adding a couple of preconfigured DNS names `lxfs0[1-6]`.
 * Improvements in the installation documentation.
 * [BUG] Don't overwrite `$KVM_REMOTE_IMAGES`.
 * Display a message to indicate `$KVM_REMOTE_IMAGES` isn't set.
+* `vm put|get` use the recursive flag for `scp` by default.
 
 # 1.3
 
