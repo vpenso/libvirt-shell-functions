@@ -23,7 +23,7 @@ handling of external dependencies like:
 * SSH, Rsync, SSHfs 
 * Chef 
 
-Follow the [Installation Instructions](docs/installation.md) to
+Follow the [Installation Instructions](_docs/installation.md) to
 prepare your workstation for virtualization. Afterwards continue
 reading [Getting Started](_docs/getting_started.md).
 
