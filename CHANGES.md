@@ -1,5 +1,6 @@
-# 1.4 (coming version)
+# 1.4
 
+* Support multiple disks in template VM images.
 * Restructured documentation.
 * Add contributors list.
 * Solve compatibility issue with `virsh list`
