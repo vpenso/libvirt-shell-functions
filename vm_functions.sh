@@ -63,6 +63,8 @@ VIRSH_NET_CONFIG=${VIRSH_NET_CONFIG:-"/srv/vms/_config/libvirt_nat_bridge.xml"}
 # Network domain
 VIRSH_NET_CONFIG_DOMAIN=".devops.test"
 
+export KVM_VM_INSTANCES KVM_GOLDEN_IMAGES
+
 if [ ! -d $KVM_GOLDEN_IMAGES ] 
 then
   mkdir $KVM_GOLDEN_IMAGES
@@ -344,6 +346,7 @@ privileges."
 #
 # to the current directory.
 function __vm_reloc() {
+  local _template=$1
   # change the SSH client configuration file
   input="  IdentityFile $PWD/keys/id_rsa";
   sed "s|^  Iden.*|$input|g" ssh_config > /tmp/dump.txt;
@@ -351,10 +354,9 @@ function __vm_reloc() {
   _log "[__vm_reloc] Configuring SSH key location in '$PWD/ssh_config'"
   # change the libvirt configuration file
   local _hostname=${PWD##*/}
-  xmlstarlet ed \
-   -u "/domain/name" -v $_hostname \
-   -u "/domain/devices/disk/source[@file]/@file" -v "$PWD/disk.img" \
-   libvirt_instance.xml > /tmp/dump.txt;
+  # replace any instance of..
+  sed -e "s|$KVM_GOLDEN_IMAGES|$KVM_VM_INSTANCES|" \
+      -e "s|$_template|$_hostname|" libvirt_instance.xml > /tmp/dump.txt ;
   mv /tmp/dump.txt libvirt_instance.xml;
   _log "[__vm_reloc] Configuring '$PWD/libvirt_instance.xml'"
 }
@@ -627,7 +629,7 @@ hostname to be applied."
       local _mac=$(__vm_mac $_instance)
       _log "[__vm_clone] Instance network $_instance at $_ip ($_mac)."
       cd $_target
-      __vm_reloc
+      __vm_reloc $1
       __vm_network_config $_mac $_ip
       __vm_instance_start
       echo -n 'Booting.'
