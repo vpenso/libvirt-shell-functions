@@ -29,11 +29,17 @@ You can change your cookbooks locally at any time. Any re-execution of the provi
       }
     }
 
-And finally execute Chef-Solo to configure the virtual machine with the command **config solo**. Each virtual machine keeps it own Chef configuration in its directory. Except of the `chef_attributes.json` file you can also adjust the `chef_config.rb` file. This file is also synced to the instance at each execution of the provisioning process. It is used to configure the _chef-client_ executed in the virtual machine. Looking into this file will show you where cookbooks and roles will be located and allows you to increase the logging level by setting `log_level :debug`.
+And finally execute Chef-Solo to configure the virtual machine with the command `vm config solo`. Each virtual machine keeps it own Chef configuration in its directory. Except of the `chef_attributes.json` file you can also adjust the `chef_config.rb` file. This file is also synced to the instance at each execution of the provisioning process. It is used to configure the _chef-client_ executed in the virtual machine. Looking into this file will show you where cookbooks and roles will be located and allows you to increase the logging level by setting `log_level :debug`.
 
 The `cookbook/` and `roles/` directories contain links to the actual cookbooks and role files. Adding a role to your provision process is done by executing:
 
-**vm config add role PATH**
+    » vm config add role ~/chef/cookbooks/sys/tests/roles/sys_autofs_test.rb 
+    Role 'sys_autofs_test.rb' added.
+    » vm config solo "role[sys_autofs_test]"
+    INFO: Creating Chef attributes file ./chef_attributes.json
+    [...SNIP...]
+
+In case the only content of `chef_attributes.json` is a specific role or recipe inside the run-list, create the file using an optional parameter to `vm config solo`.
 
 ## Chef Server
 

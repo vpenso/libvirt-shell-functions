@@ -768,7 +768,7 @@ Commands:
   add data-bag <path>
     Add data-bags to be synced to the virtual machines
     each time the configuration process is executed.
-  solo
+  solo [run-list]
     Execute Chef in solo-mode inside the virtual machine
     instance using defined cookbooks and roles, as 
     well as the node description in 'chef_attributes.json'.
@@ -817,10 +817,19 @@ Commands:
           return
         fi
       fi
-      #if [ -z $(find $PWD/cookbooks -maxdepth 1 -type l 2> /dev/null) ]; then
-      #  _error  "No cookbook found!"
-      #  return
-      #fi
+      # Write a simple Chef attributes file
+      if [[ -n $2 ]]
+      then
+        echo "{ \"run_list\": [ \"$2\" ] }" > $PWD/chef_attributes.json
+        echo "INFO: Creating Chef attributes file ./chef_attributes.json"
+      fi
+      # Make sure the user edits the Chef attributes
+      if [[ ! -e $PWD/chef_attributes.json ]]; then
+        echo "$CHEF_ATTRIBUTES" > $PWD/chef_attributes.json
+        echo "INFO: No attributes definition to run chef-solo!"
+        echo "Add cookbooks,roles and attributes to the file ./chef_attributes.json"
+        return
+      fi
       __vm_ssh "sudo mkdir -p -m 777 /var/chef/cookbooks"
       __vm_ssh 'sudo chmod 777 /var/chef'
       __vm_sync $PWD/cookbooks /var/chef >> $PWD/chef.log
@@ -839,12 +848,6 @@ Commands:
         echo "$CHEF_SOLO_CONFIG" > $PWD/chef_config.rb
       fi
       __vm_put chef_config.rb /var/chef/config.rb
-      if [[ ! -e $PWD/chef_attributes.json ]]; then
-        echo "$CHEF_ATTRIBUTES" > $PWD/chef_attributes.json
-        echo "INFO: No attributes definition to run chef-solo!"
-        echo "Add cookbooks,roles and attributes to the file ./chef_attributes.json"
-        return
-      fi
       __vm_put chef_attributes.json /var/chef/attributes.json
       shift 2> /dev/null  
       __vm_ssh "cd /var/chef; sudo chef-solo -c config.rb -j attributes.json $@"
@@ -928,7 +931,7 @@ Commands used in the instance working directory:
     Rsync a directory to the instance.
   fs mount|umount   
     Mount the VM root-directory.
-  config solo|client [<server_hostname>]
+  config solo|client
     Provision the instance using Chef either in solo
     mode, or configure the client connection to an 
     Chef-server.
