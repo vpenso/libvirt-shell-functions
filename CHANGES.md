@@ -1,3 +1,8 @@
+# Next Version
+
+* [BUG] `vm forward` use correct VM instance IP if executed
+  inside a different VM working directory.
+
 # 1.4
 
 * Support multiple disks in template VM images.

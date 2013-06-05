@@ -410,17 +410,21 @@ function __vm_port_forward() {
     ;;
   add)
     local _name=`echo $2 | cut -d: -f1`
+    vm cd $_name
     local _ip=$(__vm_ip $_name)
     local _port=`echo $2 | cut -d: -f2`
     sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport $3 -j DNAT --to $_ip:$_port
     sudo iptables -I FORWARD 1 -p tcp  -d $_ip --dport $_port -j ACCEPT
+    cd - >/dev/null
     ;;
   drop)
     local _name=`echo $2 | cut -d: -f1`
+    vm cd $_name
     local _ip=$(__vm_ip $_name)
     local _port=`echo $2 | cut -d: -f2`
     sudo iptables -D PREROUTING -t nat -i eth0 -p tcp --dport $3 -j DNAT --to $_ip:$_port
     sudo iptables -D FORWARD -p tcp  -d $_ip --dport $_port -j ACCEPT
+    cd - >/dev/null
     ;;
   *)
     echo "vm forward <list|add|drop> [FQDN:PORT] [PORT]"
