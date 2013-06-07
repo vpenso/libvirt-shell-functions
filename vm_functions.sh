@@ -24,7 +24,6 @@
 _version=1.4
 #----------------------------------------------------------------
 
-
 # enable line numbers for debug output
 if [ "$_DEBUG" = "true" ]
 then
@@ -76,6 +75,10 @@ then
   mkdir --mode 777 $KVM_VM_INSTANCES
   _log "Create instance directory: $KVM_VM_INSTANCES"
 fi
+
+# Unique directory for various purposes 
+SPOOL=$HOME/.vm_functions
+mkdir --parents $SPOOL
 
 # ----------------------------------------------------------------------
 ##
@@ -299,9 +302,9 @@ upload a differential sync is done."
     local _source=$1
     local _destination=$2
     _log "[__vm_sync] Syncing '$_source' to '$(__vm_name):$_destination'."
-    rsync --exclude '.git' --exclude '.gitignore'\
+    rsync --exclude '.git' --exclude '.gitignore' --omit-dir-times \
       --recursive --copy-links --copy-dirlinks --verbose \
-      -e "ssh -q -F $PWD/ssh_config" $_source instance:$_destination
+      -e "ssh -q -F $PWD/ssh_config" $_source instance:$_destination 2>/dev/null
   fi
 }
 
@@ -410,7 +413,7 @@ function __vm_port_forward() {
     ;;
   add)
     local _name=`echo $2 | cut -d: -f1`
-    vm cd $_name
+    vm cd $SPOOL
     local _ip=$(__vm_ip $_name)
     local _port=`echo $2 | cut -d: -f2`
     sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport $3 -j DNAT --to $_ip:$_port
@@ -419,7 +422,7 @@ function __vm_port_forward() {
     ;;
   drop)
     local _name=`echo $2 | cut -d: -f1`
-    vm cd $_name
+    vm cd $SPOOL
     local _ip=$(__vm_ip $_name)
     local _port=`echo $2 | cut -d: -f2`
     sudo iptables -D PREROUTING -t nat -i eth0 -p tcp --dport $3 -j DNAT --to $_ip:$_port
@@ -596,7 +599,7 @@ hostname to be applied."
   # Otherwise clone the instance
   else
     # make sure to be outside a virtual machine container
-    cd /tmp
+    cd $SPOOL
     # virtual machine image to use for cloning
     local _template=$KVM_GOLDEN_IMAGES/$1
     # make sure to have the FQDN of the instance

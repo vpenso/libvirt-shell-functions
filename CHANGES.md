@@ -1,5 +1,6 @@
 # Next Version
 
+* [BUG] `__vm_clone` shouldn't use /tmp as jump directory.
 * Optional run-list parameter for `vm config solo`.
 * [BUG] `vm forward` use correct VM instance IP if executed
   inside a different VM working directory.
