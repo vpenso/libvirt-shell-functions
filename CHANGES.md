@@ -1,7 +1,9 @@
 # Next Version
 
-* [BUG] `__vm_clone` shouldn't use /tmp as jump directory.
 * Optional run-list parameter for `vm config solo`.
+* [BUG] `__vn_reloc` replaces disk source independent of the 
+  template image source directory path.
+* [BUG] `__vm_clone` shouldn't use /tmp as jump directory.
 * [BUG] `vm forward` use correct VM instance IP if executed
   inside a different VM working directory.
 

@@ -352,15 +352,19 @@ function __vm_reloc() {
   local _template=$1
   # change the SSH client configuration file
   input="  IdentityFile $PWD/keys/id_rsa";
-  sed "s|^  Iden.*|$input|g" ssh_config > /tmp/dump.txt;
-  mv /tmp/dump.txt ssh_config;
+  sed "s|^  Iden.*|$input|g" ssh_config > $SPOOL/dump.txt;
+  mv $SPOOL/dump.txt ssh_config;
   _log "[__vm_reloc] Configuring SSH key location in '$PWD/ssh_config'"
   # change the libvirt configuration file
   local _hostname=${PWD##*/}
-  # replace any instance of..
-  sed -e "s|$KVM_GOLDEN_IMAGES|$KVM_VM_INSTANCES|" \
-      -e "s|$_template|$_hostname|" libvirt_instance.xml > /tmp/dump.txt ;
-  mv /tmp/dump.txt libvirt_instance.xml;
+  # Extract the disk image source path
+  local _path=$(grep -o '/.*/disk.img' libvirt_instance.xml | head -1)
+  # Remove the node specific path suffix
+  _path=${${_path%/*}%/*}
+  # Replace the node names and the paths to the disk images
+  sed -e "s|$_path|$KVM_VM_INSTANCES|" \
+      -e "s|$_template|$_hostname|" libvirt_instance.xml > $SPOOL/dump.txt ;
+  mv $SPOOL/dump.txt libvirt_instance.xml;
   _log "[__vm_reloc] Configuring '$PWD/libvirt_instance.xml'"
 }
 
