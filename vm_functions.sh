@@ -360,7 +360,7 @@ function __vm_reloc() {
   # Extract the disk image source path
   local _path=$(grep -o '/.*/disk.img' libvirt_instance.xml | head -1)
   # Remove the node specific path suffix
-  _path=${${_path%/*}%/*}
+  _path=${_path%/*/*}
   # Replace the node names and the paths to the disk images
   sed -e "s|$_path|$KVM_VM_INSTANCES|" \
       -e "s|$_template|$_hostname|" libvirt_instance.xml > $SPOOL/dump.txt ;
