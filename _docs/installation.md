@@ -1,4 +1,3 @@
-
 # Installation
 
 Find the latest version of this software on <nop>GitHub:
@@ -65,7 +64,13 @@ system-wide instance of _libvirtd_.
 
 All virtual machine instances run inside a host-internal network 
 shared by all virtual machines, connected to the external world using 
-a NAT. Enable the network bridge with:
+a NAT. The network configuration is defined in '_config/libvirt_nat_bridge.xml'. 
+To use this network configuration.
+
+    $ export VIRSH_NET_CONFIG=<your_install_path>/_config/libvirt_nat_bridge.xml
+
+
+Enable the network bridge with:
 
 
     $ vm network start
